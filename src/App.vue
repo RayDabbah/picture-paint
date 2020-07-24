@@ -1,7 +1,7 @@
 <template>
     <div class="top-bar">
         <label>Line Width: {{ config.width }}px<input min="1" v-model="config.width" type="range"/></label>
-        <div ref="picker" @change="changeColor" id="picker">Click To Pick a color</div>
+        <ColorPicker  @change="changeColor" id="picker">Click To Pick a color</ColorPicker>
     </div>
     <canvas @mousedown="setPos"
             @mouseenter="setPos"
@@ -14,7 +14,7 @@
 <script>
     import {ref, onMounted, reactive, watch} from 'vue';
     import {resize, draw, setPosition} from "./draw";
-    import Picker from 'vanilla-picker';
+    import ColorPicker from "./components/ColorPicker.vue";
 
     export default {
         name: 'App',
@@ -25,26 +25,24 @@
             const config = reactive({width: 3})
             let pos = {x: 0, y: 0};
             const drawLine = e => draw(ctx, e, pos, config);
-            const setPos = e => setPosition(pos, e)
+            const setPos = e => setPosition(pos, e);
+            const changeColor = color => config.color = color;
 
             onMounted(() => {
                 ctx = canvas.value.getContext('2d');
-                new Picker({
-                    alpha: false,
-                    parent: picker.value, onChange(color) {
-                    config.color = color.hex;
-                    }
-                })
+
                 resize(ctx);
-                // window.addEventListener("resize", () => resize(ctx));
             })
 
             watch(() => config.color, console.log)
 
             return {
-                canvas, drawLine, setPos, config, picker
+                canvas, drawLine, setPos, config, picker, changeColor
             }
         },
+        components:{
+            ColorPicker
+        }
     }
 </script>
 <style scoped>
