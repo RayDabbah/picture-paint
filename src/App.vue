@@ -1,12 +1,11 @@
 <template>
-    <div class="wrapper">
-        <div class="top-bar"></div>
-        <canvas @mousedown="setPos"
-                @mouseenter="setPos"
-                @mousemove="drawLine"
-                ref="canvas"
-        ></canvas>
-    </div>
+    <div class="top-bar"></div>
+    <canvas @mousedown="setPos"
+            @mouseenter="setPos"
+            @mousemove="drawLine"
+            ref="canvas"
+            class="canvas"
+    ></canvas>
 </template>
 
 <script>
@@ -34,3 +33,9 @@
         },
     }
 </script>
+<style scoped>
+    .canvas{
+        border-radius: 3px;
+        border: 1px black solid;
+    }
+</style>

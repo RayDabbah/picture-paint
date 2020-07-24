@@ -9,7 +9,7 @@ export const setPosition = (pos, e) => {
 
 // resize canvas
 export function resize(ctx) {
-    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.width = window.innerWidth -52;
     ctx.canvas.height = window.innerHeight - 36;
 }
 
