@@ -10,7 +10,7 @@ export function resize(ctx) {
     ctx.canvas.height = window.innerHeight - 36;
 }
 
-export const draw = (ctx, e, pos,  {width = 2, color = '000'}) => {
+export const draw = (ctx, e, pos,  {width = 2, color = '#000'}) => {
     // mouse left button must be pressed
     if (e.buttons !== 1) return;
 
@@ -18,7 +18,7 @@ export const draw = (ctx, e, pos,  {width = 2, color = '000'}) => {
 
     ctx.lineWidth = width;
     ctx.lineCap = "round";
-    ctx.strokeStyle = `#${color}`;
+    ctx.strokeStyle = color;
 
     ctx.moveTo(pos.x, pos.y); // from
     setPosition(pos, e);
