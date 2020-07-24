@@ -1,6 +1,3 @@
-let lineWidth = 5;
-
-
 // new position from mouse event
 export const setPosition = (pos, e) => {
     pos.x = e.clientX;
@@ -13,15 +10,15 @@ export function resize(ctx) {
     ctx.canvas.height = window.innerHeight - 36;
 }
 
-export const draw = (ctx, e, pos) => {
+export const draw = (ctx, e, pos,  {width = 2, color = '000'}) => {
     // mouse left button must be pressed
     if (e.buttons !== 1) return;
 
     ctx.beginPath(); // begin
 
-    ctx.lineWidth = lineWidth;
+    ctx.lineWidth = width;
     ctx.lineCap = "round";
-    ctx.strokeStyle = "#c0392b";
+    ctx.strokeStyle = `#${color}`;
 
     ctx.moveTo(pos.x, pos.y); // from
     setPosition(pos, e);
