@@ -1,5 +1,6 @@
 <template>
     <div class="top-bar">
+        <SaveAsImage :canvas="canvas"/>
         <label>Line Width: {{ config.width }}px<input min="1" v-model="config.width" type="range"/></label>
         <ColorPicker @change="changeColor" id="picker"/>
     </div>
@@ -15,8 +16,9 @@
 
 <script>
     import {ref, onMounted, reactive, watch} from 'vue';
-    import { draw, setPosition} from "./draw";
+    import {draw, setPosition} from "./draw";
     import ColorPicker from "./components/ColorPicker.vue";
+    import SaveAsImage from "./components/SaveAsImage.vue";
 
     export default {
         name: 'App',
@@ -34,7 +36,6 @@
 
             onMounted(() => {
                 ctx = canvas.value.getContext('2d');
-
             })
 
             // watch(() => config.color, console.log)
@@ -44,7 +45,7 @@
             }
         },
         components: {
-            ColorPicker
+            ColorPicker, SaveAsImage,
         }
     }
 </script>
