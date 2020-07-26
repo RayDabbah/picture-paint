@@ -2,8 +2,8 @@
     <div class="top-bar">
         <SaveAsImage :canvas="canvas"/>
         <label>Line Width: {{ config.width }}px<input min="1" v-model="config.width" type="range"/></label>
-        <ColorPicker @change="changeWritingColor"/>
-        <ColorPicker @change="canvasBackground"/>
+        <ColorPicker label="Select a color for writing"  @change="changeWritingColor"/>
+        <ColorPicker label="Select a background color" @change="canvasBackground"/>
     </div>
     <canvas @mousedown="setPos"
             @mouseenter="setPos"

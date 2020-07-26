@@ -1,6 +1,6 @@
 <template>
     <div :style="{background: selectedColor || '#000000' }" ref="picker" class="picker">
-        <span class="picker-text">Click Here To Select a color!</span></div>
+        <span class="picker-text">{{label}}</span></div>
 </template>
 
 <script>
@@ -9,6 +9,9 @@
 
     export default {
         name: "ColorPicker",
+        props:{
+            label: String,
+        },
         setup(props, {emit}) {
             const picker = ref(null);
             const selectedColor = ref(null);
