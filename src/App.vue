@@ -39,6 +39,10 @@
 
             onMounted(() => {
                 ctx.value = canvas.value.getContext('2d');
+                ctx.value.fillStyle = '#ffffff';
+                ctx.value.fillRect(0,0,canvas.value.width, canvas.value.height)
+
+
             })
 
             // watch(() => config.color, console.log)
