@@ -1,7 +1,7 @@
 // new position from mouse event
 export const setPosition = (pos, e) => {
-    pos.x = e.clientX;
-    pos.y = e.clientY;
+    pos.x = e.clientX - e.target.getBoundingClientRect().x;
+    pos.y = e.clientY - e.target.getBoundingClientRect().y;
 };
 
 export const draw = (ctxRef, e, pos, {width = 2, color = '#000'}) => {
