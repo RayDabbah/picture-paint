@@ -4,7 +4,9 @@ export const setPosition = (pos, e) => {
     pos.y = e.clientY;
 };
 
-export const draw = (ctx, e, pos, {width = 2, color = '#000'}) => {
+export const draw = (ctxRef, e, pos, {width = 2, color = '#000'}) => {
+
+    const ctx = ctxRef.value;
     // mouse left button must be pressed
     if (e.buttons !== 1) return;
 
@@ -20,3 +22,10 @@ export const draw = (ctx, e, pos, {width = 2, color = '#000'}) => {
 
     ctx.stroke(); // draw it!
 };
+
+export const setBackground = (ctxRef, canvas) => color => {
+    const ctx = ctxRef.value;
+    console.log(ctx, canvas.value);
+    ctx.fillStyle = color
+    ctx.fillRect(0,0,canvas.value.width, canvas.value.height)
+}

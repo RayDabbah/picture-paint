@@ -2,7 +2,8 @@
     <div class="top-bar">
         <SaveAsImage :canvas="canvas"/>
         <label>Line Width: {{ config.width }}px<input min="1" v-model="config.width" type="range"/></label>
-        <ColorPicker @change="changeColor" id="picker"/>
+        <ColorPicker @change="changeWritingColor"/>
+        <ColorPicker @change="canvasBackground"/>
     </div>
     <canvas @mousedown="setPos"
             @mouseenter="setPos"
@@ -16,7 +17,7 @@
 
 <script>
     import {ref, onMounted, reactive, watch} from 'vue';
-    import {draw, setPosition} from "./draw";
+    import {draw, setPosition, setBackground} from "./draw";
     import ColorPicker from "./components/ColorPicker.vue";
     import SaveAsImage from "./components/SaveAsImage.vue";
 
@@ -24,24 +25,26 @@
         name: 'App',
         setup() {
             const canvas = ref(null);
-            let ctx;
+            let ctx = ref();
             const picker = ref()
             const config = reactive({width: 1})
             let pos = {x: 0, y: 0};
             const drawLine = e => draw(ctx, e, pos, config);
             const setPos = e => setPosition(pos, e);
-            const changeColor = color => config.color = color;
+            const changeWritingColor = color => config.color = color;
 
-            const canvasSize = {width: window.innerWidth - 52, height: window.innerHeight - 36}
+            const canvasSize = {width: window.innerWidth - 52, height: window.innerHeight - 100};
+
+            const canvasBackground = setBackground(ctx, canvas);
 
             onMounted(() => {
-                ctx = canvas.value.getContext('2d');
+                ctx.value = canvas.value.getContext('2d');
             })
 
             // watch(() => config.color, console.log)
 
             return {
-                canvas, drawLine, setPos, config, picker, changeColor, canvasSize
+                canvas, drawLine, setPos, config, picker, changeWritingColor, canvasSize, canvasBackground
             }
         },
         components: {
