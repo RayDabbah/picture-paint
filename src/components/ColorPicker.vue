@@ -40,7 +40,6 @@
     }
 
     .picker:hover {
-        opacity: .75;
         transform: scale(1.01);
     }
 

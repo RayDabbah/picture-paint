@@ -2,7 +2,8 @@
     <div class="top-bar">
         <SaveAsImage :canvas="canvas"/>
         <label>Line Width: {{ config.width }}px<input min="1" v-model="config.width" type="range"/></label>
-        <ColorPicker label="Select a color for writing"  @change="changeWritingColor"/>
+        <ColorPicker label="Select a color for writing" @change="changeWritingColor"/>
+        <label>Upload an Image &nbsp;<input @change="e => setImage(e, ctx, canvas)" type="file"/></label>
         <ColorPicker label="Select a background color" @change="canvasBackground"/>
     </div>
     <canvas @mousedown="setPos"
@@ -17,7 +18,7 @@
 
 <script>
     import {ref, onMounted, reactive, watch} from 'vue';
-    import {draw, setPosition, setBackground} from "./draw";
+    import {draw, setPosition, setBackground, setImage} from "./draw";
     import ColorPicker from "./components/ColorPicker.vue";
     import SaveAsImage from "./components/SaveAsImage.vue";
 
@@ -40,7 +41,7 @@
             onMounted(() => {
                 ctx.value = canvas.value.getContext('2d');
                 ctx.value.fillStyle = '#ffffff';
-                ctx.value.fillRect(0,0,canvas.value.width, canvas.value.height)
+                ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
 
 
             })
@@ -48,7 +49,7 @@
             // watch(() => config.color, console.log)
 
             return {
-                canvas, drawLine, setPos, config, picker, changeWritingColor, canvasSize, canvasBackground
+                canvas, drawLine, setPos, config, picker, changeWritingColor, canvasSize, canvasBackground, setImage, ctx
             }
         },
         components: {
