@@ -1,19 +1,21 @@
 <template>
     <div class="top-bar">
         <label>Line Width: {{ config.width }}px<input min="1" v-model="config.width" type="range"/></label>
-        <ColorPicker  @change="changeColor" id="picker">Click To Pick a color</ColorPicker>
+        <ColorPicker @change="changeColor" id="picker"/>
     </div>
     <canvas @mousedown="setPos"
             @mouseenter="setPos"
             @mousemove="drawLine"
             ref="canvas"
             class="canvas"
+            :width="canvasSize.width"
+            :height="canvasSize.height"
     ></canvas>
 </template>
 
 <script>
     import {ref, onMounted, reactive, watch} from 'vue';
-    import {resize, draw, setPosition} from "./draw";
+    import { draw, setPosition} from "./draw";
     import ColorPicker from "./components/ColorPicker.vue";
 
     export default {
@@ -22,25 +24,26 @@
             const canvas = ref(null);
             let ctx;
             const picker = ref()
-            const config = reactive({width: 3})
+            const config = reactive({width: 1})
             let pos = {x: 0, y: 0};
             const drawLine = e => draw(ctx, e, pos, config);
             const setPos = e => setPosition(pos, e);
             const changeColor = color => config.color = color;
 
+            const canvasSize = {width: window.innerWidth - 52, height: window.innerHeight - 36}
+
             onMounted(() => {
                 ctx = canvas.value.getContext('2d');
 
-                resize(ctx);
             })
 
-            watch(() => config.color, console.log)
+            // watch(() => config.color, console.log)
 
             return {
-                canvas, drawLine, setPos, config, picker, changeColor
+                canvas, drawLine, setPos, config, picker, changeColor, canvasSize
             }
         },
-        components:{
+        components: {
             ColorPicker
         }
     }

@@ -4,13 +4,7 @@ export const setPosition = (pos, e) => {
     pos.y = e.clientY;
 };
 
-// resize canvas
-export function resize(ctx) {
-    ctx.canvas.width = window.innerWidth -52;
-    ctx.canvas.height = window.innerHeight - 36;
-}
-
-export const draw = (ctx, e, pos,  {width = 2, color = '#000'}) => {
+export const draw = (ctx, e, pos, {width = 2, color = '#000'}) => {
     // mouse left button must be pressed
     if (e.buttons !== 1) return;
 
