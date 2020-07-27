@@ -26,6 +26,8 @@ export const draw = (ctxRef, e, pos, {width = 2, color = '#000'}) => {
 
 export const setBackground = (ctxRef, canvas) => color => {
     const ctx = ctxRef.value;
+    // need to add this because the color picker emits a change before this is initialized
+    if(!ctx) return;
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, canvas.value.width, canvas.value.height)
 }
