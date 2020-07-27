@@ -9,7 +9,7 @@
 
     export default {
         name: "ColorPicker",
-        props:{
+        props: {
             label: String,
         },
         setup(props, {emit}) {
@@ -19,7 +19,7 @@
             onMounted(() => {
                 new Picker({
                     alpha: false,
-                    parent: picker.value, onChange: color => {
+                    parent: picker.value, onDone: color => {
                         emit('change', color.hex);
                         selectedColor.value = color.hex;
                     }
