@@ -5,3 +5,18 @@
   text-align: center;
   color: #2c3e50;
 }
+
+button, .file-input-label,.picker{
+  border: none;
+  border-radius: 5px;
+  padding: .75rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  background: red;
+  font-size: 1rem;
+  text-align: center;
+}
+button:hover{
+  opacity: .75;
+}

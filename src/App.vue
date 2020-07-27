@@ -3,7 +3,9 @@
         <SaveAsImage :canvas="canvas"/>
         <label>Line Width: {{ config.width }}px<input min="1" v-model="config.width" type="range"/></label>
         <ColorPicker label="Select a color for writing" @change="changeWritingColor"/>
-        <label>Upload an Image &nbsp;<input @change="e => setImage(e, ctx, canvas)" type="file"/></label>
+        <label class="file-input-label">Upload an Image &nbsp;<input class="file-input"
+                                                                     @change="e => setImage(e, ctx, canvas)"
+                                                                     type="file"/></label>
         <ColorPicker label="Select a background color" @change="canvasBackground"/>
     </div>
     <canvas @mousedown="setPos"
@@ -46,10 +48,17 @@
 
             })
 
-            // watch(() => config.color, console.log)
-
             return {
-                canvas, drawLine, setPos, config, picker, changeWritingColor, canvasSize, canvasBackground, setImage, ctx
+                canvas,
+                drawLine,
+                setPos,
+                config,
+                picker,
+                changeWritingColor,
+                canvasSize,
+                canvasBackground,
+                setImage,
+                ctx
             }
         },
         components: {
@@ -66,8 +75,26 @@
     .top-bar {
         display: flex;
         justify-content: space-around;
+        align-items: center;
         padding: 1rem;
         border: 1px grey solid;
         margin: .5rem;
+    }
+
+    .file-input-label {
+        cursor: pointer;
+    }
+
+    .file-input-label {
+        background: blue;
+    }
+
+    .file-input {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
     }
 </style>

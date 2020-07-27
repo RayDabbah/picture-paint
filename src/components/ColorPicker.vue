@@ -33,9 +33,6 @@
 
 <style scoped>
     .picker {
-        padding: .75rem;
-        border-radius: 10px;
-        cursor: pointer;
         transition: 300ms;
     }
 
