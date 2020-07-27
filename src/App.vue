@@ -2,7 +2,7 @@
     <div class="top-bar">
         <SaveAsImage :canvas="canvas"/>
 
-        <button class="clear-button" @click="() => canvasBackground('#ffffffff')">
+        <button class="clear-button" @click="clearCanvas">
             Clear
         </button>
 
@@ -60,6 +60,11 @@
 
             const canvasBackground = setBackground(ctx, canvas);
 
+            const clearCanvas = () => {
+                canvas.value.width = canvasSize.width;
+                canvas.value.height = canvasSize.height;
+            }
+
             onMounted(() => {
                 ctx.value = canvas.value.getContext('2d');
                 ctx.value.fillStyle = '#ffffff';
@@ -78,6 +83,7 @@
                 canvasSize,
                 canvasBackground,
                 setImage,
+                clearCanvas,
                 ctx
             }
         },
