@@ -117,4 +117,8 @@
         position: absolute;
         z-index: -1;
     }
+
+    .clear-button {
+        background: orange;
+    }
 </style>

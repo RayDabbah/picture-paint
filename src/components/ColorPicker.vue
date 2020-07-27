@@ -11,6 +11,7 @@
         name: "ColorPicker",
         props: {
             label: String,
+            initialColor: String,
         },
         setup(props, {emit}) {
             const picker = ref(null);
@@ -33,6 +34,9 @@
 </script>
 
 <style scoped>
+    .picker{
+        border: 1px solid black;
+    }
     .picker-text {
         mix-blend-mode: difference;
         color: white;
