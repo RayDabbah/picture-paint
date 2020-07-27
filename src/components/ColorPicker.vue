@@ -33,14 +33,6 @@
 </script>
 
 <style scoped>
-    .picker {
-        transition: 300ms;
-    }
-
-    .picker:hover {
-        transform: scale(1.01);
-    }
-
     .picker-text {
         mix-blend-mode: difference;
         color: white;
