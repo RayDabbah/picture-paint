@@ -19,6 +19,7 @@
             onMounted(() => {
                 new Picker({
                     alpha: false,
+                    cancelButton: true,
                     parent: picker.value, onDone: color => {
                         emit('change', color.hex);
                         selectedColor.value = color.hex;
