@@ -1,12 +1,26 @@
 <template>
     <div class="top-bar">
         <SaveAsImage :canvas="canvas"/>
-        <label>Line Width: {{ config.width }}px<input min="1" v-model="config.width" type="range"/></label>
-        <ColorPicker label="Select a color for writing" @change="changeWritingColor"/>
-        <label class="file-input-label">Upload an Image &nbsp;<input class="file-input"
-                                                                     @change="e => setImage(e, ctx, canvas)"
-                                                                     type="file"/></label>
-        <ColorPicker label="Select a background color" @change="canvasBackground"/>
+
+        <button class="clear-button" @click="() => canvasBackground('#ffffffff')">
+            Clear
+        </button>
+
+        <label>
+            Line Width: {{ config.width }}px
+            <input min="1" v-model="config.width" type="range"/>
+        </label>
+
+        <ColorPicker initialColor="#000000ff" label="Select a color for writing" @change="changeWritingColor"/>
+
+        <label class="file-input-label">
+            Upload an Image &nbsp;
+            <input class="file-input"
+                   @change="e => setImage(e, ctx, canvas)"
+                   type="file"/>
+        </label>
+
+        <ColorPicker label="Select a background color" initial-color="#ffffff" @change="canvasBackground"/>
     </div>
     <canvas @mousedown="setPos"
             @mouseenter="setPos"
@@ -29,11 +43,17 @@
         setup() {
             const canvas = ref(null);
             let ctx = ref();
+
             const picker = ref()
+
             const config = reactive({width: 1})
+
             let pos = {x: 0, y: 0};
+
             const drawLine = e => draw(ctx, e, pos, config);
+
             const setPos = e => setPosition(pos, e);
+
             const changeWritingColor = color => config.color = color;
 
             const canvasSize = {width: window.innerWidth - 52, height: window.innerHeight - 100};
