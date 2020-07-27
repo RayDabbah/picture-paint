@@ -21,7 +21,9 @@
                 new Picker({
                     alpha: false,
                     cancelButton: true,
-                    parent: picker.value, onDone: color => {
+                    color: props.initialColor,
+                    popup: 'bottom',
+                    parent: picker.value, onChange: color => {
                         emit('change', color.hex);
                         selectedColor.value = color.hex;
                     }
