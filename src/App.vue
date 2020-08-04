@@ -1,6 +1,6 @@
 <template>
     <div class="top-bar">
-        <SaveAsImage :canvas="canvas"/>
+        <SaveAsImage />
 
         <button class="clear-button" @click="clearCanvas">
             Clear
@@ -16,7 +16,7 @@
         <label class="file-input-label">
             Upload an Image &nbsp;
             <input class="file-input"
-                   @change="e => setImage(e, ctx, canvas)"
+                   @change="e => setImage(e)"
                    type="file"/>
         </label>
 
@@ -25,7 +25,7 @@
     <canvas @mousedown="setPos"
             @mouseenter="setPos"
             @mousemove="drawLine"
-            ref="canvas"
+            id="canvas"
             class="canvas"
             :width="canvasSize.width"
             :height="canvasSize.height"
@@ -41,8 +41,6 @@
     export default {
         name: 'App',
         setup() {
-            const canvas = ref(null);
-            let ctx = ref();
 
             const picker = ref()
 
@@ -50,7 +48,7 @@
 
             let pos = {x: 0, y: 0};
 
-            const drawLine = e => draw(ctx, e, pos, config);
+            const drawLine = e => draw(e, pos, config);
 
             const setPos = e => setPosition(pos, e);
 
@@ -58,23 +56,23 @@
 
             const canvasSize = {width: window.innerWidth - 52, height: window.innerHeight - 100};
 
-            const canvasBackground = setBackground(ctx, canvas);
+            const canvasBackground = setBackground();
 
             const clearCanvas = () => {
-                canvas.value.width = canvasSize.width;
-                canvas.value.height = canvasSize.height;
+                canvas.width = canvasSize.width;
+                canvas.height = canvasSize.height;
             }
 
             onMounted(() => {
-                ctx.value = canvas.value.getContext('2d');
-                ctx.value.fillStyle = '#ffffff';
-                ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
+                window.canvas = document.getElementById('canvas');
+                window.ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height)
 
 
             })
 
             return {
-                canvas,
                 drawLine,
                 setPos,
                 config,
@@ -84,7 +82,6 @@
                 canvasBackground,
                 setImage,
                 clearCanvas,
-                ctx
             }
         },
         components: {

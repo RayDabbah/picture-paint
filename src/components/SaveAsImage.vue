@@ -11,11 +11,11 @@
         props: {
             canvas: HTMLCanvasElement,
         },
-        setup(props, {emit}) {
-            const imgLink = ref(null)
+        setup() {
+            const imgLink = ref(null);
 
             const saveAsImage = () => {
-                imgLink.value.href = props.canvas.toDataURL('image/png');
+                imgLink.value.href = canvas.toDataURL('image/png');
                 imgLink.value.click();
             };
             return {imgLink, saveAsImage}

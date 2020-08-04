@@ -5,9 +5,8 @@ export const setPosition = (pos, e) => {
     pos.y = e.clientY - elDimensions.y;
 };
 
-export const draw = (ctxRef, e, pos, {width = 2, color = '#000'}) => {
+export const draw = (e, pos, {width = 2, color = '#000'}) => {
 
-    const ctx = ctxRef.value;
     // mouse left button must be pressed
     if (e.buttons !== 1) return;
 
@@ -24,15 +23,14 @@ export const draw = (ctxRef, e, pos, {width = 2, color = '#000'}) => {
     ctx.stroke(); // draw it!
 };
 
-export const setBackground = (ctxRef, canvas) => color => {
-    const ctx = ctxRef.value;
+export const setBackground = () => color => {
     // need to add this because the color picker emits a change before this is initialized
-    if(!ctx) return;
+    if ('undefined' === typeof ctx) return;
     ctx.fillStyle = color;
-    ctx.fillRect(0, 0, canvas.value.width, canvas.value.height)
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
 }
 
-export const setImage = (e, ctx, canvas) => {
+export const setImage = (e) => {
     const img = new Image();
     img.src = URL.createObjectURL(e.target.files[0]);
     img.onload = () => {
