@@ -23,7 +23,7 @@ export const draw = (e, pos, {width = 2, color = '#000'}) => {
     ctx.stroke(); // draw it!
 };
 
-export const setBackground = () => color => {
+export const setBackground = color => {
     // need to add this because the color picker emits a change before this is initialized
     if ('undefined' === typeof ctx) return;
     ctx.fillStyle = color;

@@ -8,9 +8,7 @@
 
     export default {
         name: "SaveAsImage",
-        props: {
-            canvas: HTMLCanvasElement,
-        },
+
         setup() {
             const imgLink = ref(null);
 

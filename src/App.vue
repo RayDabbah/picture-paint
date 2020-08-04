@@ -20,7 +20,7 @@
                    type="file"/>
         </label>
 
-        <ColorPicker label="Select a background color" initial-color="#ffffff" @change="canvasBackground"/>
+        <ColorPicker label="Select a background color" initialColor="#ffffff" @change="setBackground"/>
     </div>
     <canvas @mousedown="setPos"
             @mouseenter="setPos"
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-    import {ref, onMounted, reactive, watch} from 'vue';
+    import {ref, onMounted, reactive,} from 'vue';
     import {draw, setPosition, setBackground, setImage} from "./draw";
     import ColorPicker from "./components/ColorPicker.vue";
     import SaveAsImage from "./components/SaveAsImage.vue";
@@ -56,8 +56,6 @@
 
             const canvasSize = {width: window.innerWidth - 52, height: window.innerHeight - 100};
 
-            const canvasBackground = setBackground();
-
             const clearCanvas = () => {
                 canvas.width = canvasSize.width;
                 canvas.height = canvasSize.height;
@@ -79,7 +77,7 @@
                 picker,
                 changeWritingColor,
                 canvasSize,
-                canvasBackground,
+                setBackground,
                 setImage,
                 clearCanvas,
             }
