@@ -9,13 +9,13 @@
     export default {
         name: "SaveAsImage",
         props: {
-          imgName: {type: String, default: ''},
+          imgName: {type: String},
         },
         setup(props) {
             const imgLink = ref(null);
 
             const saveAsImage = () => {
-                const fileExtensionType = props.imgName.split('.').pop().startsWith('jp')? 'jpeg' : 'png';
+                const fileExtensionType = props.imgName?.split('.').pop().startsWith('jp')? 'jpeg' : 'png';
                 imgLink.value.href = canvas.toDataURL(`image/${fileExtensionType}`, 1.0);
                 imgLink.value.click();
             };
