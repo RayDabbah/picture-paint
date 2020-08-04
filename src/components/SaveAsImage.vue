@@ -1,6 +1,6 @@
 <template>
     <button @click="saveAsImage">Save Your creation!</button>
-    <a download ref="imgLink" class="img-link"></a>
+    <a :download="imgName || 'my-creation'" ref="imgLink" class="img-link"></a>
 </template>
 
 <script>
@@ -8,12 +8,15 @@
 
     export default {
         name: "SaveAsImage",
-
-        setup() {
+        props: {
+          imgName: {type: String, default: ''},
+        },
+        setup(props) {
             const imgLink = ref(null);
 
             const saveAsImage = () => {
-                imgLink.value.href = canvas.toDataURL('image/png');
+                const fileExtensionType = props.imgName.split('.').pop().startsWith('jp')? 'jpeg' : 'png';
+                imgLink.value.href = canvas.toDataURL(`image/${fileExtensionType}`, 1.0);
                 imgLink.value.click();
             };
             return {imgLink, saveAsImage}

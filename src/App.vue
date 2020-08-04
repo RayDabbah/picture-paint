@@ -1,6 +1,6 @@
 <template>
     <div class="top-bar">
-        <SaveAsImage />
+        <SaveAsImage :img-name="imageName" />
 
         <button class="clear-button" @click="clearCanvas">
             Clear
@@ -16,7 +16,8 @@
         <label class="file-input-label">
             Upload an Image &nbsp;
             <input class="file-input"
-                   @change="e => setImage(e)"
+                   accept="image/png, image/jpeg"
+                   @change="e => imageName =  setImage(e)"
                    type="file"/>
         </label>
 
@@ -33,7 +34,7 @@
 </template>
 
 <script>
-    import {ref, onMounted, reactive,} from 'vue';
+    import {ref, onMounted, reactive} from 'vue';
     import {draw, setPosition, setBackground, setImage} from "./draw";
     import ColorPicker from "./components/ColorPicker.vue";
     import SaveAsImage from "./components/SaveAsImage.vue";
@@ -43,6 +44,8 @@
         setup() {
 
             const picker = ref()
+
+            const imageName = ref(null)
 
             const config = reactive({width: 1})
 
@@ -59,6 +62,7 @@
             const clearCanvas = () => {
                 canvas.width = canvasSize.width;
                 canvas.height = canvasSize.height;
+                imageName.value = '';
             }
 
             onMounted(() => {
@@ -80,6 +84,7 @@
                 setBackground,
                 setImage,
                 clearCanvas,
+                imageName,
             }
         },
         components: {

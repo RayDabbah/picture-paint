@@ -31,13 +31,14 @@ export const setBackground = color => {
 }
 
 export const setImage = (e) => {
+    const file = e.target.files[0];
     const img = new Image();
-    img.src = URL.createObjectURL(e.target.files[0]);
+    img.src = URL.createObjectURL(file);
     img.onload = () => {
         canvas.height = img.height;
         canvas.width = img.width;
         ctx.drawImage(img, 0, 0);
     };
     e.target.value = null;
-
+    return file.name;
 }
