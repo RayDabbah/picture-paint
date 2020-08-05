@@ -15,7 +15,8 @@
             const imgLink = ref(null);
 
             const saveAsImage = () => {
-                const fileExtensionType = props.imgName?.split('.').pop().startsWith('jp')? 'jpeg' : 'png';
+                const fileExtension = props.imgName? props.imgName.split('.').pop() :'';
+                const fileExtensionType = fileExtension.startsWith('jp')? 'jpeg' : 'png';
                 imgLink.value.href = canvas.toDataURL(`image/${fileExtensionType}`, 1.0);
                 imgLink.value.click();
             };
