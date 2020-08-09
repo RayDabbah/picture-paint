@@ -1,29 +1,32 @@
-body,html, #app{
-  margin: 0;
-}
-*{
-  box-sizing: border-box;
-}
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body, html, #app {
+    margin: 0;
 }
 
-button, .file-input-label,.picker{
-  height: 2.5rem;
-  border: none;
-  border-radius: 5px;
-  padding: .75rem;
-  cursor: pointer;
-  font-weight: 600;
-  color: white;
-  background: red;
-  font-size: 1rem;
-  text-align: center;
+* {
+    box-sizing: border-box;
 }
-button:hover{
-  opacity: .75;
+
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+}
+
+button, .file-input-label, .picker {
+    height: 2.5rem;
+    border: none;
+    border-radius: 5px;
+    padding: .75rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    background: red;
+    font-size: 1rem;
+    text-align: center;
+}
+
+button:hover {
+    opacity: .75;
 }

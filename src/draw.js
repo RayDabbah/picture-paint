@@ -42,3 +42,5 @@ export const setImage = (e) => {
     e.target.value = null;
     return file.name;
 }
+
+
