@@ -2,6 +2,8 @@
   <div class="top-bar">
     <SaveAsImage :img-name="imageName"/>
 
+    <button @click="undo">Undo</button>
+
     <button class="clear-button" @click="clearCanvas">
       Clear
     </button>
@@ -35,7 +37,7 @@
 
 <script>
 import {ref, onMounted, reactive} from 'vue';
-import {draw, setPosition, setBackground, setImage} from "./draw";
+import {draw, setPosition, setBackground, setImage, undo, redraw} from "./draw";
 import ColorPicker from "./components/ColorPicker.vue";
 import SaveAsImage from "./components/SaveAsImage.vue";
 
@@ -84,6 +86,7 @@ export default {
       setBackground,
       setImage,
       clearCanvas,
+      undo,
       imageName,
     }
   },

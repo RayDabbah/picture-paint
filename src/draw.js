@@ -1,3 +1,8 @@
+let drawPoints = [];
+document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === 'z') undo();
+})
+
 // new position from mouse event
 export const setPosition = (pos, e) => {
     const elDimensions = e.target.getBoundingClientRect();
@@ -16,11 +21,15 @@ export const draw = (e, pos, {width = 2, color = '#000'}) => {
     ctx.lineCap = "round";
     ctx.strokeStyle = color;
 
+    const from = {x: pos.x, y: pos.y}
+
     ctx.moveTo(pos.x, pos.y); // from
     setPosition(pos, e);
     ctx.lineTo(pos.x, pos.y); // to
 
     ctx.stroke(); // draw it!
+
+    drawPoints = drawPoints.concat({width, color, from, to: {x: pos.x, y: pos.y}});
 };
 
 export const setBackground = color => {
@@ -28,6 +37,7 @@ export const setBackground = color => {
     if ('undefined' === typeof ctx) return;
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, canvas.width, canvas.height)
+    redraw();
 }
 
 export const setImage = (e) => {
@@ -41,6 +51,32 @@ export const setImage = (e) => {
     };
     e.target.value = null;
     return file.name;
+}
+
+export const undo = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    drawPoints.pop();
+
+    redraw();
+}
+
+export function redraw() {
+
+    drawPoints.forEach(({width, color, from, to}) => {
+        ctx.beginPath();
+
+        ctx.lineWidth = width;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = color;
+
+
+        ctx.moveTo(from.x, from.y); // from
+
+        ctx.lineTo(to.x, to.y); // to
+
+        ctx.stroke(); // draw it!
+
+    })
 }
 
 
