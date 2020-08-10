@@ -7,7 +7,6 @@
     <button class="clear-button" @click="clearCanvas">
       Clear
     </button>
-
     <label>
       Line Width: {{ config.width }}px
       <input min="1" v-model="config.width" type="range"/>
@@ -19,7 +18,7 @@
       Upload an Image &nbsp;
       <input class="file-input"
              accept="image/png, image/jpeg"
-             @change="e => imageName =  setImage(e)"
+             @change="imageDialog"
              type="file"/>
     </label>
 
@@ -33,6 +32,9 @@
           :width="canvasSize.width"
           :height="canvasSize.height"
   ></canvas>
+
+  <FullModal @no="showRedrawModal = false" @yes="redrawAndClose" text="Would you like to place your drawing on top of this picture?" :open="showRedrawModal"/>
+
 </template>
 
 <script>
@@ -40,6 +42,7 @@ import {ref, onMounted, reactive} from 'vue';
 import {draw, setPosition, setBackground, setImage, undo, redraw} from "./draw";
 import ColorPicker from "./components/ColorPicker.vue";
 import SaveAsImage from "./components/SaveAsImage.vue";
+import FullModal from "./components/FullModal.vue";
 
 export default {
   name: 'App',
@@ -51,6 +54,8 @@ export default {
 
     const config = reactive({width: 1})
 
+    const showRedrawModal = ref(false)
+
     let pos = {x: 0, y: 0};
 
     const drawLine = e => draw(e, pos, config);
@@ -60,6 +65,16 @@ export default {
     const changeWritingColor = color => config.color = color;
 
     const canvasSize = {width: window.innerWidth - 52, height: window.innerHeight - 100};
+
+    const imageDialog = e => {
+      imageName.value = setImage(e);
+      showRedrawModal.value = true;
+    }
+
+    const redrawAndClose = () =>{
+      redraw();
+      showRedrawModal.value = false;
+    }
 
     const clearCanvas = () => {
       canvas.width = canvasSize.width;
@@ -84,14 +99,16 @@ export default {
       changeWritingColor,
       canvasSize,
       setBackground,
-      setImage,
+      imageDialog,
       clearCanvas,
       undo,
       imageName,
+      showRedrawModal,
+      redrawAndClose,
     }
   },
   components: {
-    ColorPicker, SaveAsImage,
+    ColorPicker, SaveAsImage, FullModal,
   }
 }
 </script>
