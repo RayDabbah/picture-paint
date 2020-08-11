@@ -43,7 +43,7 @@
 <script>
 import {ref, onMounted, reactive} from 'vue';
 import {draw, setPosition, setBackground, setImage,} from "./draw";
-import {undo, redraw} from './trackDrawings';
+import {undo, redraw, trackAction} from './trackDrawings';
 import ColorPicker from "./components/ColorPicker.vue";
 import SaveAsImage from "./components/SaveAsImage.vue";
 import FullModal from "./components/FullModal.vue";
@@ -77,11 +77,11 @@ export default {
       showRedrawModal.value = false;
     }
 
-    const clearCanvas = () => {
-      canvas.width = canvasSize.width;
-      canvas.height = canvasSize.height;
+    const clearCanvas = () => trackAction(() => {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
       imageName.value = '';
-    }
+    })
 
     onMounted(() => {
       window.canvas = document.getElementById('canvas');
