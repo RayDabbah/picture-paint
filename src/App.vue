@@ -24,8 +24,8 @@
 
     <ColorPicker label="Select a background color" initialColor="#ffffff" @change="setBackground"/>
   </div>
-  <canvas @mousedown="setPos"
-          @mouseenter="setPos"
+  <canvas @mousedown="setPosition"
+          @mouseenter="setPosition"
           @mousemove="drawLine"
           id="canvas"
           class="canvas"
@@ -33,13 +33,17 @@
           :height="canvasSize.height"
   ></canvas>
 
-  <FullModal @no="showRedrawModal = false" @yes="redrawAndClose" text="Would you like to place your drawing on top of this picture?" :open="showRedrawModal"/>
+  <FullModal @no="showRedrawModal = false"
+             @yes="redrawAndClose"
+             text="Would you like to place your drawing on top of this picture?"
+             :open="showRedrawModal"/>
 
 </template>
 
 <script>
 import {ref, onMounted, reactive} from 'vue';
-import {draw, setPosition, setBackground, setImage, undo, redraw} from "./draw";
+import {draw, setPosition, setBackground, setImage,} from "./draw";
+import {undo, redraw} from './trackDrawings';
 import ColorPicker from "./components/ColorPicker.vue";
 import SaveAsImage from "./components/SaveAsImage.vue";
 import FullModal from "./components/FullModal.vue";
@@ -56,11 +60,8 @@ export default {
 
     const showRedrawModal = ref(false)
 
-    let pos = {x: 0, y: 0};
 
-    const drawLine = e => draw(e, pos, config);
-
-    const setPos = e => setPosition(pos, e);
+    const drawLine = e => draw(e, config);
 
     const changeWritingColor = color => config.color = color;
 
@@ -71,8 +72,8 @@ export default {
       showRedrawModal.value = true;
     }
 
-    const redrawAndClose = () =>{
-      redraw();
+    const redrawAndClose = () => {
+      redraw(false);
       showRedrawModal.value = false;
     }
 
@@ -85,6 +86,7 @@ export default {
     onMounted(() => {
       window.canvas = document.getElementById('canvas');
       window.ctx = canvas.getContext('2d');
+      window.pos = {x: 0, y: 0};
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
@@ -93,7 +95,7 @@ export default {
 
     return {
       drawLine,
-      setPos,
+      setPosition,
       config,
       picker,
       changeWritingColor,

@@ -1,35 +1,43 @@
-let drawPoints = [];
+import {redraw, undo, trackAction} from "./trackDrawings";
+
 document.addEventListener('keydown', e => {
     if (e.ctrlKey && e.key === 'z') undo();
 })
 
 // new position from mouse event
-export const setPosition = (pos, e) => {
+export const setPosition = (e) => {
     const elDimensions = e.target.getBoundingClientRect();
-    pos.x = e.clientX - elDimensions.x;
-    pos.y = e.clientY - elDimensions.y;
+
+    window.pos = {
+        x: e.clientX - elDimensions.x,
+        y: e.clientY - elDimensions.y
+    }
 };
 
-export const draw = (e, pos, {width = 2, color = '#000'}) => {
+export const draw = (e, {width = 2, color = '#000'}) => {
 
     // mouse left button must be pressed
     if (e.buttons !== 1) return;
+    const from = {...pos};
+    setPosition(e);
+    const to = {...pos};
 
-    ctx.beginPath(); // begin
+    trackAction(() => {
 
-    ctx.lineWidth = width;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = color;
+        ctx.beginPath(); // begin
 
-    const from = {x: pos.x, y: pos.y}
+        ctx.lineWidth = width;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = color;
 
-    ctx.moveTo(pos.x, pos.y); // from
-    setPosition(pos, e);
-    ctx.lineTo(pos.x, pos.y); // to
 
-    ctx.stroke(); // draw it!
+        ctx.moveTo(from.x, from.y); // from
 
-    drawPoints = drawPoints.concat({width, color, from, to: {x: pos.x, y: pos.y}});
+        ctx.lineTo(to.x, to.y); // to
+
+        ctx.stroke(); // draw it!
+    })
+
 };
 
 export const setBackground = color => {
@@ -37,7 +45,7 @@ export const setBackground = color => {
     if ('undefined' === typeof ctx) return;
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, canvas.width, canvas.height)
-    redraw();
+    redraw(false);
 }
 
 export const setImage = (e) => {
@@ -53,30 +61,7 @@ export const setImage = (e) => {
     return file.name;
 }
 
-export const undo = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    drawPoints.pop();
-
-    redraw();
-}
-
-export function redraw() {
-
-    drawPoints.forEach(({width, color, from, to}) => {
-        ctx.beginPath();
-
-        ctx.lineWidth = width;
-        ctx.lineCap = "round";
-        ctx.strokeStyle = color;
 
 
-        ctx.moveTo(from.x, from.y); // from
-
-        ctx.lineTo(to.x, to.y); // to
-
-        ctx.stroke(); // draw it!
-
-    })
-}
 
 
